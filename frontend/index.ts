@@ -1,6 +1,4 @@
-import { Router } from '@vaadin/router';
-import { routes } from './routes';
+import './main';
 
-export const router = new Router(document.querySelector('#outlet'));
-
-router.setRoutes(routes);
+// This file is for Hilla interop.
+// Hilla expects an index.ts file as the entrypoint.

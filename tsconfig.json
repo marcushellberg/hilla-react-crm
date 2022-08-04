@@ -6,9 +6,13 @@
 {
   "compilerOptions": {
     "sourceMap": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "inlineSources": true,
-    "module": "esNext",
-    "target": "es2019",
+    "useDefineForClassFields": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": false,
+    "module": "ESNext",
+    "target": "ESNext",
     "moduleResolution": "node",
     "strict": true,
     "noFallthroughCasesInSwitch": true,
@@ -19,16 +23,14 @@
     "noUnusedParameters": false,
     "experimentalDecorators": true,
     "baseUrl": "frontend",
+    "resolveJsonModule": true,
+    "isolatedModules": false, // TODO: Should be true, broken because of window.Vaadin = window.Vaadin || {} in generated code
+    "noEmit": true,
+    "jsx": "react-jsx",
     "paths": {
-      "Frontend/*": [
-        "*"
-      ]
+      "Frontend/*": ["*"]
     }
   },
-  "include": [
-    "frontend/**/*.ts",
-    "frontend/index.js",
-    "types.d.ts"
-  ],
+  "include": ["./frontend"],
   "exclude": []
 }
