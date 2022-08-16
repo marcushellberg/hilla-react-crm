@@ -124,7 +124,7 @@
     "mobx": "^6.3.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-vaadin-components": "github:tomivirkki/react-vaadin-components"
+    "react-vaadin-components": "^1.0.0-alpha.1"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "3.1.0",
@@ -398,6 +398,6 @@
       "workbox-core": "6.5.0",
       "workbox-precaching": "6.5.0"
     },
-    "hash": "4505e0938dd9aab99450fe504b628872da58cae8a681d5f9a3f0b894745263cb"
+    "hash": "5a156905f57770e3bd0fc9cafbf23377541a29bdce24242dedbe5498e84f10eb"
   }
 }
