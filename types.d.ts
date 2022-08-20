@@ -1,5 +1,2 @@
-declare module '*.css' {
-  import { CSSResultGroup } from 'lit';
-  const content: CSSResultGroup;
-  export default content;
-}
+///<reference path="node_modules/@types/react/index.d.ts"/>
+
