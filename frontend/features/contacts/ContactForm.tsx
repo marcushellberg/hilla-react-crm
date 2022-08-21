@@ -3,72 +3,120 @@ import {useFormik} from "formik";
 import * as yup from 'yup';
 import {useSelector} from "react-redux";
 import {RootState} from "Frontend/app/store";
+import {useAppDispatch} from "Frontend/app/hooks";
+import {deleteContact, saveContact, selectContact} from "Frontend/features/contacts/contactsSlice";
+import Contact from "Frontend/generated/com/example/application/data/entity/Contact";
+
+export interface ContactFormModel {
+  id: string,
+  firstName: string,
+  lastName: string,
+  email: string,
+  companyId: string,
+  statusId: string
+}
 
 export default function ContactForm() {
   const companies = useSelector((state: RootState) => state.contacts.companies);
   const statuses = useSelector((state: RootState) => state.contacts.statuses);
   const selectedContact = useSelector((state: RootState) => state.contacts.selected);
+  const dispatch = useAppDispatch();
 
-  const validationSchema = yup.object({
-    firstName: yup.string().required('First name is required'),
-    lastName: yup.string().required('Last name is required'),
-    email: yup.string().email('Enter a valid email').required('Last name is required'),
-    status: yup.number().required('Select a status'),
-    company: yup.number().required('Select a company')
+  const contactToFormModel = (contact: Contact) => ({
+    id: contact.id,
+    firstName: contact.firstName,
+    lastName: contact.lastName,
+    email: contact.email,
+    companyId: contact.company?.id,
+    statusId: contact.status?.id
   });
 
-  const formik = useFormik({
-    initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      company: 0,
-      status: 0
-    },
-    validationSchema,
-    onSubmit: (values) => {
+  const formModelToContact = (formModel: ContactFormModel) => ({
+    id: formModel.id,
+    firstName: formModel.firstName,
+    lastName: formModel.lastName,
+    email: formModel.email,
+    company: companies.find(c => c.id === formModel.companyId),
+    status: statuses.find(s => s.id === formModel.statusId)
+  });
 
+  const validationSchema = yup.object({
+    firstName: yup.string().required('First name is required').min(2),
+    lastName: yup.string().required('Last name is required').min(2),
+    email: yup.string().email('Enter a valid email').required('Email is required'),
+    statusId: yup.string().required('Select a status'),
+    companyId: yup.string().required('Select a company')
+  });
+
+  const formValues = selectedContact ? contactToFormModel(selectedContact) : {
+    firstName: '',
+    lastName: '',
+    email: '',
+    companyId: '',
+    statusId: ''
+  };
+
+  const formik = useFormik({
+    initialValues: formValues,
+    validationSchema,
+    enableReinitialize: true,
+    onSubmit: (values) => {
+      dispatch(saveContact(formModelToContact(values as ContactFormModel)))
     }
   });
 
+  const deleteCurrentContact = () => {
+    if (selectedContact) {
+      dispatch(deleteContact(selectedContact));
+    }
+  }
+
+  const closeEditor = () => dispatch(selectContact(null));
 
   return (
-    <form className="flex flex-col gap-s">
+    <form className="flex flex-col gap-s" onSubmit={formik.handleSubmit}>
       <TextField label="First name"
                  name="firstName"
                  value={formik.values.firstName}
                  onChange={formik.handleChange}
-                 errorMessage={(formik.touched.firstName && Boolean(formik.errors.firstName)) ? formik.errors.firstName : ''}/>
+                 invalid={Boolean(formik.errors.firstName)}
+                 errorMessage={formik.errors.firstName ? formik.errors.firstName : ''}/>
       <TextField label="Last name"
                  name="lastName"
                  value={formik.values.lastName}
                  onChange={formik.handleChange}
-                 errorMessage={(formik.touched.lastName && Boolean(formik.errors.lastName)) ? formik.errors.lastName : ''}/>
+                 invalid={Boolean(formik.errors.lastName)}
+                 errorMessage={formik.errors.lastName ? formik.errors.lastName : ''}/>
       <EmailField label="Email"
                   name="email"
                   value={formik.values.email}
                   onChange={formik.handleChange}
-                  errorMessage={(formik.touched.email && Boolean(formik.errors.email)) ? formik.errors.email : ''}/>
+                  invalid={Boolean(formik.errors.email)}
+                  errorMessage={formik.errors.email ? formik.errors.email : ''}/>
 
       <ComboBox label="Status"
-                name="status"
+                name="statusId"
                 items={statuses}
                 itemLabelPath="name"
-        // value={formik.values.status}
+                itemValuePath="id"
+                value={formik.values.statusId}
                 onChange={formik.handleChange}
-                errorMessage={(formik.touched.status && Boolean(formik.errors.status)) ? formik.errors.status : ''}/>
+                invalid={Boolean(formik.errors.statusId)}
+                errorMessage={formik.errors.statusId ? formik.errors.statusId : ''}/>
       <ComboBox label="Company"
-                name="company"
+                name="companyId"
                 items={companies}
                 itemLabelPath="name"
-        // value={formik.values.company}
+                itemValuePath="id"
+                value={formik.values.companyId}
                 onChange={formik.handleChange}
-                errorMessage={(formik.touched.company && Boolean(formik.errors.company)) ? formik.errors.company : ''}/>
+                invalid={Boolean(formik.errors.companyId)}
+                errorMessage={formik.errors.companyId ? formik.errors.companyId : ''}/>
 
       <div className="flex gap-s">
-        <Button theme="primary">Save</Button>
-        <Button theme="error">Delete</Button>
-        <Button theme="tertiary">Cancel</Button>
+        <Button theme="primary" onClick={e => formik.submitForm()}>Save</Button>
+        <Button theme="error" onClick={deleteCurrentContact}>Delete</Button>
+        <Button theme="tertiary" onClick={closeEditor}>Cancel</Button>
       </div>
     </form>
   );

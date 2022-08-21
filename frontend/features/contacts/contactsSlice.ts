@@ -65,6 +65,7 @@ export const contactsSlice = createSlice({
       })
       .addCase(saveContact.fulfilled, (state, action) => {
         const saved = action.payload;
+
         if (saved) {
           const contacts = state.contacts;
           const contactExists = contacts.some((c) => c.id === saved.id);
@@ -74,14 +75,20 @@ export const contactsSlice = createSlice({
           } else {
             state.contacts = [...contacts, saved];
           }
+
+          state.selected = null;
         }
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
         const id = action.payload;
         state.contacts = state.contacts.filter(((c) => c.id !== id));
+        state.selected = null;
       })
   }
 })
+
+
+// Selectors
 
 export const getFilteredContacts = (state: RootState) => {
   const filter = new RegExp(state.contacts.filterText, 'i');
@@ -102,6 +109,7 @@ export const getContactsByCompany = (state: RootState) => {
     value: employees
   }));
 }
+
 
 export const {updateFilter, selectContact} = contactsSlice.actions
 export default contactsSlice.reducer
