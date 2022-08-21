@@ -112,5 +112,5 @@ export const getContactsByCompany = (state: RootState) => {
 
 
 export const {updateFilter, selectContact} = contactsSlice.actions
-export default contactsSlice.reducer
+export const contactsReducer = contactsSlice.reducer
 

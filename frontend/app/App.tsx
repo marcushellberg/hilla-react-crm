@@ -18,7 +18,9 @@ function App() {
           <li><NavLink to="/dashboard">Dashboard</NavLink></li>
         </ul>
       </nav>
+
       <Outlet/>
+      
     </AppLayout>
   );
 }

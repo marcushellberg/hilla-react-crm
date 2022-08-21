@@ -16,10 +16,12 @@ export default function Contacts() {
   const filter = useSelector((state: RootState) => state.contacts.filterText);
 
   const filterChanged = (e: Event) => dispatch(updateFilter((e as TextFieldChangeEvent).target.value));
-  // TODO: fix type
+
+  // TODO: fix event type
   const handleGridSelection = (e: GridActiveItemChangedEvent<any>) => {
     dispatch(selectContact(e.detail.value as Contact));
   }
+
   const addContact = () => dispatch(selectContact({} as Contact));
 
   return (
