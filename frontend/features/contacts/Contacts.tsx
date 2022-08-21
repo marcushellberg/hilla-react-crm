@@ -1,6 +1,5 @@
 import {Button, Grid, GridColumn, TextField} from "react-vaadin-components";
 import ContactForm from "./ContactForm";
-import {Suspense} from "react";
 import {TextFieldChangeEvent} from "@vaadin/text-field";
 import {GridActiveItemChangedEvent} from "@vaadin/grid";
 import Contact from "Frontend/generated/com/example/application/data/entity/Contact";
@@ -28,25 +27,23 @@ export default function Contacts() {
       <div className="toolbar flex gap-s">
         <TextField
           placeholder="Filter by name"
-          clear-button-visible
+          clearButtonVisible
           value={filter}
           onInput={filterChanged}
         />
         <Button onClick={addContact}>Add Contact</Button>
       </div>
       <div className="content flex gap-m h-full">
-        <Suspense fallback={<div>Loading contacts...</div>}>
-          <Grid
-            className="h-full"
-            items={contacts}
-            onActiveItemChanged={handleGridSelection}
-            selectedItems={[selectedContact]}>
-            <GridColumn path="firstName" auto-width/>
-            <GridColumn path="lastName" auto-width/>
-            <GridColumn path="status.name" header="Status" auto-width/>
-            <GridColumn path="company.name" header="Company" auto-width/>
-          </Grid>
-        </Suspense>
+        <Grid
+          className="h-full"
+          items={contacts}
+          onActiveItemChanged={handleGridSelection}
+          selectedItems={[selectedContact]}>
+          <GridColumn path="firstName" auto-width/>
+          <GridColumn path="lastName" auto-width/>
+          <GridColumn path="status.name" header="Status" auto-width/>
+          <GridColumn path="company.name" header="Company" auto-width/>
+        </Grid>
         {selectedContact && <ContactForm/>}
       </div>
     </div>
