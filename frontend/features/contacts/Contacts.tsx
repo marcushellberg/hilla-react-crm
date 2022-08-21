@@ -1,25 +1,27 @@
 import {Button, Grid, GridColumn, TextField} from "react-vaadin-components";
 import ContactForm from "./ContactForm";
-import {useRecoilState, useRecoilValue} from "recoil";
 import {Suspense} from "react";
-import {filteredContacts, filterState, selectedContactState} from "Frontend/features/contacts/contactViewState";
 import {TextFieldChangeEvent} from "@vaadin/text-field";
 import {GridActiveItemChangedEvent} from "@vaadin/grid";
 import Contact from "Frontend/generated/com/example/application/data/entity/Contact";
-import ContactModel from "Frontend/generated/com/example/application/data/entity/ContactModel";
+import {useSelector} from "react-redux";
+import {getFilteredContacts, selectContact, updateFilter} from "Frontend/features/contacts/contactsSlice";
+import {useAppDispatch} from "Frontend/app/hooks";
+import {RootState} from "Frontend/app/store";
 
 
 export default function Contacts() {
-  const contacts = useRecoilValue(filteredContacts);
-  const [filter, setFilter] = useRecoilState(filterState);
-  const [selectedContact, setSelectedContact] = useRecoilState(selectedContactState);
+  const dispatch = useAppDispatch();
+  const contacts = useSelector(getFilteredContacts);
+  const selectedContact = useSelector((state: RootState) => state.contacts.selected);
+  const filter = useSelector((state: RootState) => state.contacts.filterText);
 
-  const filterChanged = (e: Event) => setFilter((e as TextFieldChangeEvent).target.value);
+  const filterChanged = (e: Event) => dispatch(updateFilter((e as TextFieldChangeEvent).target.value));
   // TODO: fix type
   const handleGridSelection = (e: GridActiveItemChangedEvent<any>) => {
-    setSelectedContact(e.detail.value as Contact);
+    dispatch(selectContact(e.detail.value as Contact));
   }
-  const addContact = () => setSelectedContact(ContactModel.createEmptyValue());
+  const addContact = () => dispatch(selectContact({} as Contact));
 
   return (
     <div className="box-border flex flex-col p-m gap-s w-full h-full">
@@ -38,8 +40,7 @@ export default function Contacts() {
             className="h-full"
             items={contacts}
             onActiveItemChanged={handleGridSelection}
-            selectedItems={[selectedContact]}
-          >
+            selectedItems={[selectedContact]}>
             <GridColumn path="firstName" auto-width/>
             <GridColumn path="lastName" auto-width/>
             <GridColumn path="status.name" header="Status" auto-width/>

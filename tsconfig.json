@@ -6,7 +6,11 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
     "inlineSources": true,
     "useDefineForClassFields": true,
     "allowSyntheticDefaultImports": true,
@@ -24,13 +28,19 @@
     "experimentalDecorators": true,
     "baseUrl": "frontend",
     "resolveJsonModule": true,
-    "isolatedModules": false, // TODO: Should be true, broken because of window.Vaadin = window.Vaadin || {} in generated code
+    "isolatedModules": false,
+    // TODO: Should be true, broken because of window.Vaadin = window.Vaadin || {} in generated code
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "Frontend/*": ["*"]
+      "Frontend/*": [
+        "*"
+      ]
     }
   },
-  "include": ["./frontend"],
+  "include": [
+    "./frontend",
+    "types.d.ts"
+  ],
   "exclude": []
 }

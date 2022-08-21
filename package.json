@@ -19,6 +19,7 @@
     "@polymer/iron-meta": "3.0.1",
     "@polymer/iron-resizable-behavior": "3.0.1",
     "@polymer/polymer": "3.5.1",
+    "@reduxjs/toolkit": "^1.8.5",
     "@vaadin/accordion": "23.2.0-beta2",
     "@vaadin/app-layout": "23.2.0-beta2",
     "@vaadin/avatar": "23.2.0-beta2",
@@ -133,10 +134,11 @@
     "mobx": "^6.3.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.2",
     "react-router-dom": "^6.3.0",
     "react-vaadin-components": "^1.0.0-alpha.1",
     "recharts": "^2.1.13",
-    "recoil": "^0.7.5"
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "3.1.0",
@@ -291,8 +293,10 @@
     "@hilla/generator-typescript-utils": "$@hilla/generator-typescript-utils",
     "formik": "$formik",
     "react-router-dom": "$react-router-dom",
-    "recoil": "$recoil",
-    "recharts": "$recharts"
+    "recharts": "$recharts",
+    "@reduxjs/toolkit": "$@reduxjs/toolkit",
+    "react-redux": "$react-redux",
+    "yup": "$yup"
   },
   "vaadin": {
     "dependencies": {
@@ -436,6 +440,6 @@
       "workbox-core": "6.5.0",
       "workbox-precaching": "6.5.0"
     },
-    "hash": "c76701dff12346d0275b7ecf117be073c2fba6f96053424eaa719bee98b348ff"
+    "hash": "65142e0e0bef5d8bb2cd050459377bdadbe04dadc0390ba3caac39eb6522ec21"
   }
 }

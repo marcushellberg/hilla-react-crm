@@ -6,14 +6,18 @@ import 'react-vaadin-components/dist/css/core.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Contacts from "./features/contacts/Contacts";
 import Dashboard from "./features/dashboard/Dashboard";
-import {RecoilRoot} from "recoil";
+import {store} from "Frontend/app/store";
+import {Provider} from "react-redux";
+import {initFromServer} from "Frontend/features/contacts/contactsSlice";
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
 
+store.dispatch(initFromServer());
+
 root.render(
   <React.StrictMode>
-    <RecoilRoot>
+    <Provider store={store}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App/>}>
@@ -22,6 +26,6 @@ root.render(
           </Route>
         </Routes>
       </BrowserRouter>
-    </RecoilRoot>
+    </Provider>
   </React.StrictMode>
 );

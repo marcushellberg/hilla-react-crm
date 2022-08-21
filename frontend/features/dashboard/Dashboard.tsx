@@ -1,11 +1,11 @@
-import {useRecoilValue} from "recoil";
-import {contactCount, contactsPerCompany} from "Frontend/features/dashboard/dashboardViewState";
 import {Cell, Pie, PieChart} from "recharts";
+import {useSelector} from "react-redux";
+import {getContactsByCompany, getNumberOfContacts} from "Frontend/features/contacts/contactsSlice";
 
 export default function Dashboard() {
   const COLORS = ['#00747C', '#00BBC9', '#CACACA', '#878787', '#202022'];
-  const contacts = useRecoilValue(contactCount);
-  const contactStats = useRecoilValue(contactsPerCompany);
+  const contacts = useSelector(getNumberOfContacts);
+  const contactStats = useSelector(getContactsByCompany);
 
   return (
     <div className="flex flex-col items-center">
