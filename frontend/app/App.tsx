@@ -8,7 +8,7 @@ function App() {
     <AppLayout>
 
       <header slot="navbar" className="flex gap-m items-center">
-        <DrawerToggle slot="navbar"/>
+        <DrawerToggle />
         <h1 className="m-0 text-l">Hilla + React CRM</h1>
       </header>
 

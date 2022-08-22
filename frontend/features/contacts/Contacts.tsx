@@ -1,7 +1,5 @@
-import {Button, Grid, GridColumn, TextField} from "react-vaadin-components";
+import {Button, Grid, GridColumn, TextField, TextFieldElement, GridElement} from "react-vaadin-components";
 import ContactForm from "./ContactForm";
-import {TextFieldChangeEvent} from "@vaadin/text-field";
-import {GridActiveItemChangedEvent} from "@vaadin/grid";
 import Contact from "Frontend/generated/com/example/application/data/entity/Contact";
 import {useSelector} from "react-redux";
 import {getFilteredContacts, selectContact, updateFilter} from "Frontend/features/contacts/contactsSlice";
@@ -15,10 +13,10 @@ export default function Contacts() {
   const selectedContact = useSelector((state: RootState) => state.contacts.selected);
   const filter = useSelector((state: RootState) => state.contacts.filterText);
 
-  const filterChanged = (e: Event) => dispatch(updateFilter((e as TextFieldChangeEvent).target.value));
+  const filterChanged = (e: TextFieldElement.TextFieldValueChangedEvent) => dispatch(updateFilter(e.detail.value));
 
   // TODO: fix event type
-  const handleGridSelection = (e: GridActiveItemChangedEvent<any>) => {
+  const handleGridSelection = (e: GridElement.GridActiveItemChangedEvent<any>) => {
     dispatch(selectContact(e.detail.value as Contact));
   }
 
@@ -31,7 +29,7 @@ export default function Contacts() {
           placeholder="Filter by name"
           clearButtonVisible
           value={filter}
-          onInput={filterChanged}
+          onValueChanged={filterChanged}
         />
         <Button onClick={addContact}>Add Contact</Button>
       </div>
@@ -41,10 +39,10 @@ export default function Contacts() {
           items={contacts}
           onActiveItemChanged={handleGridSelection}
           selectedItems={[selectedContact]}>
-          <GridColumn path="firstName" auto-width/>
-          <GridColumn path="lastName" auto-width/>
-          <GridColumn path="status.name" header="Status" auto-width/>
-          <GridColumn path="company.name" header="Company" auto-width/>
+          <GridColumn path="firstName" autoWidth/>
+          <GridColumn path="lastName" autoWidth/>
+          <GridColumn path="status.name" header="Status" autoWidth/>
+          <GridColumn path="company.name" header="Company" autoWidth/>
         </Grid>
         {selectedContact && <ContactForm/>}
       </div>
