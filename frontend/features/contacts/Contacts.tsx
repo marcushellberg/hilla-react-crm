@@ -16,8 +16,8 @@ export default function Contacts() {
   const filterChanged = (e: TextFieldElement.TextFieldValueChangedEvent) => dispatch(updateFilter(e.detail.value));
 
   // TODO: fix event type
-  const handleGridSelection = (e: GridElement.GridActiveItemChangedEvent<any>) => {
-    dispatch(selectContact(e.detail.value as Contact));
+  const handleGridSelection = (e: GridElement.GridActiveItemChangedEvent<Contact>) => {
+    dispatch(selectContact(e.detail.value));
   }
 
   const addContact = () => dispatch(selectContact({} as Contact));

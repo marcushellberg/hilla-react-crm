@@ -136,7 +136,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.3.0",
-    "react-vaadin-components": "^1.0.0-alpha.2",
+    "react-vaadin-components": "^1.0.0-alpha.3",
     "recharts": "^2.1.13",
     "yup": "^0.32.11"
   },
@@ -440,6 +440,6 @@
       "workbox-core": "6.5.0",
       "workbox-precaching": "6.5.0"
     },
-    "hash": "62f1eeb37c11495e07839b987520330aa3077d6912bd693b72955ace64883d89"
+    "hash": "e0871bdf2db67bfa6bce30cf293ae16ede3f55722c51cb0278c88f8e833567d6"
   }
 }
